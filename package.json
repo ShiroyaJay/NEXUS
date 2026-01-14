@@ -1,0 +1,22 @@
+{
+  "name": "nexus-emotional-guide",
+  "version": "2.0.0",
+  "description": "NEXUS - Emotional Guide with peer-to-peer conversation support",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "emotional-guide",
+    "peer-to-peer",
+    "websocket",
+    "mental-health"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "socket.io": "^4.6.1"
+  }
+}

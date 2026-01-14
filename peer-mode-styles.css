@@ -1,0 +1,235 @@
+/* ==================== Peer Mode Styles ==================== */
+
+/* Feeling Selection Screen */
+.feeling-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: var(--spacing-md);
+    margin: var(--spacing-xl) 0;
+    max-width: 500px;
+}
+
+.feeling-card {
+    background: var(--bg-white);
+    border: 2px solid var(--border-color);
+    border-radius: 16px;
+    padding: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-sm);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    font-family: var(--font-family);
+}
+
+.feeling-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--primary-color);
+    box-shadow: var(--shadow-md);
+}
+
+.feeling-card:active {
+    transform: translateY(-2px);
+}
+
+.feeling-emoji {
+    font-size: 2.5rem;
+}
+
+.feeling-label {
+    font-size: var(--font-size-base);
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+/* Matching Screen */
+.matching-animation {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto var(--spacing-xl);
+    position: relative;
+}
+
+.pulse-circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-gradient-start), var(--primary-gradient-end));
+    opacity: 0.6;
+    animation: pulse 2s ease-out infinite;
+}
+
+.pulse-delay-1 {
+    animation-delay: 0.5s;
+}
+
+.pulse-delay-2 {
+    animation-delay: 1s;
+}
+
+@keyframes pulse {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.6;
+    }
+
+    50% {
+        transform: translate(-50%, -50%) scale(1.5);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translate(-50%, -50%) scale(2);
+        opacity: 0;
+    }
+}
+
+.matching-tips {
+    margin: var(--spacing-xl) 0;
+    padding: var(--spacing-md);
+    background: var(--bg-nexus);
+    border-radius: 12px;
+}
+
+.matching-tips p {
+    color: var(--text-secondary);
+    font-size: var(--font-size-sm);
+    line-height: 1.6;
+}
+
+/* Peer Chat Messages */
+.ai-guide-message {
+    justify-content: center;
+    margin: var(--spacing-md) 0;
+}
+
+.ai-guide-message .message-bubble {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+    border: 1px solid var(--primary-color);
+    color: var(--text-primary);
+    text-align: center;
+    max-width: 85%;
+    font-size: var(--font-size-sm);
+}
+
+.ai-guide-label {
+    display: inline-block;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-xs);
+}
+
+.system-message {
+    justify-content: center;
+    margin: var(--spacing-md) 0;
+}
+
+.system-message .message-bubble {
+    background: var(--bg-nexus);
+    color: var(--text-secondary);
+    text-align: center;
+    font-size: var(--font-size-sm);
+    font-style: italic;
+}
+
+#peer-input,
+#user-input {
+    flex: 1;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: var(--spacing-md);
+    font-size: var(--font-size-base);
+    font-family: var(--font-family);
+    resize: none;
+    max-height: 120px;
+    transition: border-color var(--transition-fast);
+    background: var(--bg-light);
+    color: var(--text-primary);
+}
+
+#peer-input:focus,
+#user-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+#peer-input::placeholder,
+#user-input::placeholder {
+    color: var(--text-light);
+}
+
+/* Reflection Screen */
+.reflection-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+    margin: var(--spacing-xl) 0;
+}
+
+.reflection-prompt {
+    text-align: left;
+}
+
+.reflection-question {
+    display: block;
+    font-size: var(--font-size-lg);
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.reflection-input {
+    width: 100%;
+    min-height: 100px;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: var(--spacing-md);
+    font-size: var(--font-size-base);
+    font-family: var(--font-family);
+    resize: vertical;
+    transition: border-color var(--transition-fast);
+    background: var(--bg-light);
+    color: var(--text-primary);
+}
+
+.reflection-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.insights-container {
+    margin-top: var(--spacing-xl);
+    padding: var(--spacing-lg);
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
+    border-radius: 16px;
+    border-left: 3px solid var(--primary-color);
+}
+
+.insights-container h3 {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-md);
+}
+
+.insights-text {
+    color: var(--text-secondary);
+    line-height: 1.7;
+    font-size: var(--font-size-base);
+}
+
+/* Peer Screen Specific */
+#chat-screen-solo,
+#chat-screen-peer {
+    padding: 0;
+}
+
+/* Mode Selection Buttons */
+.welcome-container .primary-button {
+    margin: var(--spacing-sm) auto;
+}

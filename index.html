@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,32 +10,34 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
+
 <body>
-  
+
   <!-- Welcome Screen -->
   <div id="welcome-screen" class="screen">
     <div class="welcome-container">
       <div class="logo">
         <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="30" cy="30" r="28" stroke="url(#gradient)" stroke-width="4"/>
-          <path d="M20 30 C20 20, 40 20, 40 30 C40 40, 20 40, 20 30" stroke="url(#gradient)" stroke-width="3" fill="none"/>
+          <circle cx="30" cy="30" r="28" stroke="url(#gradient)" stroke-width="4" />
+          <path d="M20 30 C20 20, 40 20, 40 30 C40 40, 20 40, 20 30" stroke="url(#gradient)" stroke-width="3"
+            fill="none" />
           <defs>
             <linearGradient id="gradient" x1="0" y1="0" x2="60" y2="60">
-              <stop offset="0%" stop-color="#667eea"/>
-              <stop offset="100%" stop-color="#764ba2"/>
+              <stop offset="0%" stop-color="#667eea" />
+              <stop offset="100%" stop-color="#764ba2" />
             </linearGradient>
           </defs>
         </svg>
       </div>
-      
+
       <h1>NEXUS</h1>
       <p class="subtitle">Emotional Guide</p>
-      
+
       <div class="welcome-text">
         <p>A space to move from surface-level conversation to meaningful emotional dialogue.</p>
         <p>Through gentle guidance, we'll explore what matters to you.</p>
       </div>
-      
+
       <div class="core-values">
         <div class="value-item">
           <span class="value-icon">🔒</span>
@@ -49,32 +52,93 @@
           <span>Human-Centered</span>
         </div>
       </div>
-      
+
       <div class="disclaimer">
-        <p><strong>Important:</strong> NEXUS is a conversation guide, not a therapist or medical professional. This tool does not diagnose or treat mental health conditions.</p>
+        <p><strong>Important:</strong> NEXUS is a conversation guide, not a therapist or medical professional. This tool
+          does not diagnose or treat mental health conditions.</p>
       </div>
-      
-      <button id="start-button" class="primary-button">Start Conversation</button>
-      
+
+      <button id="start-solo-button" class="primary-button">Solo Mode (Talk with AI)</button>
+      <button id="start-peer-button" class="primary-button">Peer Mode (Talk with Someone)</button>
+
       <button id="info-button" class="text-button">Privacy & Information</button>
     </div>
   </div>
-  
-  <!-- Chat Screen -->
-  <div id="chat-screen" class="screen hidden">
+
+  <!-- Feeling Selection Screen (for Peer Mode) -->
+  <div id="feeling-screen" class="screen hidden">
+    <div class="welcome-container">
+      <h2>How are you feeling right now?</h2>
+      <p class="subtitle">We'll match you with someone who might understand.</p>
+
+      <div class="feeling-grid">
+        <button class="feeling-card" data-feeling="calm">
+          <span class="feeling-emoji">😌</span>
+          <span class="feeling-label">Calm</span>
+        </button>
+        <button class="feeling-card" data-feeling="lonely">
+          <span class="feeling-emoji">😔</span>
+          <span class="feeling-label">Lonely</span>
+        </button>
+        <button class="feeling-card" data-feeling="stressed">
+          <span class="feeling-emoji">😰</span>
+          <span class="feeling-label">Stressed</span>
+        </button>
+        <button class="feeling-card" data-feeling="anxious">
+          <span class="feeling-emoji">😟</span>
+          <span class="feeling-label">Anxious</span>
+        </button>
+        <button class="feeling-card" data-feeling="overwhelmed">
+          <span class="feeling-emoji">😵</span>
+          <span class="feeling-label">Overwhelmed</span>
+        </button>
+        <button class="feeling-card" data-feeling="curious">
+          <span class="feeling-emoji">🤔</span>
+          <span class="feeling-label">Curious</span>
+        </button>
+      </div>
+
+      <button id="random-match-button" class="secondary-button">Or Match Randomly</button>
+      <button id="back-to-welcome" class="text-button">← Back</button>
+    </div>
+  </div>
+
+  <!-- Matching Lobby Screen -->
+  <div id="matching-screen" class="screen hidden">
+    <div class="welcome-container">
+      <div class="matching-animation">
+        <div class="pulse-circle"></div>
+        <div class="pulse-circle pulse-delay-1"></div>
+        <div class="pulse-circle pulse-delay-2"></div>
+      </div>
+
+      <h2>Finding someone for you...</h2>
+      <p id="matching-feeling-label" class="subtitle"></p>
+
+      <div class="matching-tips">
+        <p>💡 Tip: Be yourself. Authenticity creates connection.</p>
+      </div>
+
+      <button id="cancel-matching" class="secondary-button">Cancel</button>
+    </div>
+  </div>
+
+  <!-- Chat Screen (Solo Mode) -->
+  <div id="chat-screen-solo" class="screen hidden">
     <div class="chat-container">
-      
+
       <!-- Header -->
       <header class="chat-header">
         <div class="header-left">
           <div class="logo-small">
             <svg width="32" height="32" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="30" cy="30" r="28" stroke="url(#gradient2)" stroke-width="4"/>
-              <path d="M20 30 C20 20, 40 20, 40 30 C40 40, 20 40, 20 30" stroke="url(#gradient2)" stroke-width="3" fill="none"/>
+              <circle cx="30" cy="30" r="28" stroke="url(#gradient2)" stroke-width="4" />
+              <path d="M20 30 C20 20, 40 20, 40 30 C40 40, 20 40, 20 30" stroke="url(#gradient2)" stroke-width="3"
+                fill="none" />
               <defs>
                 <linearGradient id="gradient2" x1="0" y1="0" x2="60" y2="60">
-                  <stop offset="0%" stop-color="#667eea"/>
-                  <stop offset="100%" stop-color="#764ba2"/>
+                  <stop offset="0%" stop-color="#667eea" />
+                  <stop offset="100%" stop-color="#764ba2" />
                 </linearGradient>
               </defs>
             </svg>
@@ -86,44 +150,125 @@
         </div>
         <button id="new-chat-button" class="icon-button" title="New Conversation">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12 5v14M5 12h14"/>
+            <path d="M12 5v14M5 12h14" />
           </svg>
         </button>
       </header>
-      
+
       <!-- Messages -->
       <div id="messages" class="messages-container"></div>
-      
+
       <!-- Input Area -->
       <div class="input-container">
         <div class="control-buttons">
           <button id="skip-button" class="secondary-button">Skip Topic</button>
           <button id="stop-button" class="secondary-button">Stop Here</button>
         </div>
-        
+
         <div class="input-wrapper">
-          <textarea 
-            id="user-input" 
-            placeholder="Share your thoughts..."
-            rows="1"
-          ></textarea>
+          <textarea id="user-input" placeholder="Share your thoughts..." rows="1"></textarea>
           <button id="send-button" class="send-button">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+              <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
             </svg>
           </button>
         </div>
       </div>
-      
+
     </div>
   </div>
-  
+
+  <!-- Peer Chat Screen -->
+  <div id="chat-screen-peer" class="screen hidden peer-chat-layout">
+    <div class="chat-container">
+
+      <!-- Header -->
+      <header class="chat-header">
+        <div class="header-left">
+          <div class="logo-small">
+            <svg width="32" height="32" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="30" cy="30" r="28" stroke="url(#gradient3)" stroke-width="4" />
+              <path d="M20 30 C20 20, 40 20, 40 30 C40 40, 20 40, 20 30" stroke="url(#gradient3)" stroke-width="3"
+                fill="none" />
+              <defs>
+                <linearGradient id="gradient3" x1="0" y1="0" x2="60" y2="60">
+                  <stop offset="0%" stop-color="#667eea" />
+                  <stop offset="100%" stop-color="#764ba2" />
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <div>
+            <h2>Peer Mode</h2>
+            <p id="peer-status" class="stage-label">Connected</p>
+          </div>
+        </div>
+        <button id="leave-peer-button" class="icon-button" title="Leave Conversation">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" />
+          </svg>
+        </button>
+      </header>
+
+      <!-- Messages -->
+      <div id="peer-messages" class="messages-container"></div>
+
+      <!-- Input Area -->
+      <div class="input-container">
+        <div class="input-wrapper">
+          <textarea id="peer-input" placeholder="Share your thoughts..." rows="1"></textarea>
+          <button id="peer-send-button" class="send-button">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- AI Guidance Panel -->
+    <div class="ai-guidance-panel">
+      <div class="ai-panel-header">
+        <span class="ai-panel-title">💡 AI Guide</span>
+        <button id="toggle-ai-panel" class="icon-button" title="Minimize">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+      </div>
+      <div class="ai-panel-content" id="ai-guidance-messages">
+        <p class="ai-panel-hint">The AI will offer gentle guidance if it notices opportunities to deepen your
+          connection.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reflection Screen -->
+  <div id="reflection-screen" class="screen hidden">
+    <div class="welcome-container">
+      <h2>💭 Reflection Time</h2>
+      <p class="subtitle">Take a moment to reflect on this experience.</p>
+
+      <div id="reflection-prompts" class="reflection-container">
+        <!-- Prompts will be dynamically inserted -->
+      </div>
+
+      <div id="reflection-insights" class="insights-container hidden">
+        <h3>✨ Insights</h3>
+        <div id="insights-content" class="insights-text"></div>
+      </div>
+
+      <button id="finish-reflection" class="primary-button">Complete Reflection</button>
+    </div>
+  </div>
+
   <!-- Crisis Resources Modal -->
   <div id="crisis-modal" class="modal hidden">
     <div class="modal-content">
       <h3>Support Resources</h3>
       <p>If you're experiencing a crisis, please reach out to one of these professional services:</p>
-      
+
       <div class="resources-list">
         <div class="resource-item">
           <h4>988 Suicide & Crisis Lifeline</h4>
@@ -131,14 +276,14 @@
           <p>24/7 support for people in crisis</p>
           <a href="https://988lifeline.org" target="_blank" rel="noopener">Visit Website →</a>
         </div>
-        
+
         <div class="resource-item">
           <h4>Crisis Text Line</h4>
           <p class="resource-contact">Text HOME to 741741</p>
           <p>Free 24/7 crisis support via text</p>
           <a href="https://www.crisistextline.org" target="_blank" rel="noopener">Visit Website →</a>
         </div>
-        
+
         <div class="resource-item">
           <h4>International Support</h4>
           <p class="resource-contact">Find help worldwide</p>
@@ -146,16 +291,16 @@
           <a href="https://www.iasp.info/resources/Crisis_Centres" target="_blank" rel="noopener">Visit Website →</a>
         </div>
       </div>
-      
+
       <button id="close-modal" class="primary-button">Close</button>
     </div>
   </div>
-  
+
   <!-- Info Modal -->
   <div id="info-modal" class="modal hidden">
     <div class="modal-content">
       <h3>Privacy & Information</h3>
-      
+
       <div class="info-section">
         <h4>🔒 Your Privacy</h4>
         <ul>
@@ -166,7 +311,7 @@
           <li>You have full control - skip or stop anytime</li>
         </ul>
       </div>
-      
+
       <div class="info-section">
         <h4>💙 How It Works</h4>
         <p>NEXUS guides you through 5 conversation stages:</p>
@@ -178,20 +323,28 @@
           <li><strong>Closure</strong> - Summary and gentle ending</li>
         </ol>
       </div>
-      
+
       <div class="info-section">
         <h4>⚠️ Important Disclaimer</h4>
-        <p>NEXUS is a conversation guide, NOT a therapist, counselor, or medical professional. This tool does not diagnose mental health conditions or provide treatment. If you're experiencing a mental health crisis or need professional support, please contact a qualified healthcare provider or crisis service.</p>
+        <p>NEXUS is a conversation guide, NOT a therapist, counselor, or medical professional. This tool does not
+          diagnose mental health conditions or provide treatment. If you're experiencing a mental health crisis or
+          need professional support, please contact a qualified healthcare provider or crisis service.</p>
       </div>
-      
+
       <button id="close-info" class="primary-button">Got It</button>
     </div>
   </div>
-  
+
   <!-- Scripts -->
+  <script src="https://cdn.socket.io/4.6.1/socket.io.min.js"></script>
   <script src="conversation-engine.js"></script>
   <script src="safety.js"></script>
+  <script src="peer-mode.js"></script>
+  <script src="ai-guide.js"></script>
+  <script src="reflection-engine.js"></script>
+  <script src="peer-app.js"></script>
   <script src="app.js"></script>
-  
+
 </body>
+
 </html>

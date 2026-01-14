@@ -8,7 +8,7 @@
 class OllamaConversationEngine {
     constructor() {
         this.conversationHistory = [];
-        this.ollamaEndpoint = 'http://localhost:11435/api/chat';
+        this.ollamaEndpoint = 'http://localhost:11434/api/chat';
         this.model = 'llama3.1:8b'; // Default model
         this.isOllamaAvailable = false;
         this.conversationStartTime = Date.now();
@@ -84,7 +84,7 @@ Remember: You're having a real human conversation with someone who needs to be h
      */
     async checkOllama() {
         try {
-            const response = await fetch('http://localhost:11435/api/tags');
+            const response = await fetch(this.ollamaEndpoint.replace('/api/chat', '/api/tags'));
             if (response.ok) {
                 this.isOllamaAvailable = true;
                 return { available: true, message: 'Ollama is running' };

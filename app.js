@@ -33,7 +33,7 @@ class NexusApp {
     cacheElements() {
         this.elements = {
             welcomeScreen: document.getElementById('welcome-screen'),
-            chatScreen: document.getElementById('chat-screen'),
+            chatScreen: document.getElementById('chat-screen-solo'),
             messagesContainer: document.getElementById('messages'),
             userInput: document.getElementById('user-input'),
             sendButton: document.getElementById('send-button'),
@@ -41,7 +41,8 @@ class NexusApp {
             stopButton: document.getElementById('stop-button'),
             newChatButton: document.getElementById('new-chat-button'),
             infoButton: document.getElementById('info-button'),
-            startButton: document.getElementById('start-button'),
+            startSoloButton: document.getElementById('start-solo-button'),
+            startPeerButton: document.getElementById('start-peer-button'),
             crisisModal: document.getElementById('crisis-modal'),
             closeModalButton: document.getElementById('close-modal'),
             infoModal: document.getElementById('info-modal'),
@@ -54,7 +55,8 @@ class NexusApp {
      * Attach event listeners
      */
     attachEventListeners() {
-        this.elements.startButton.addEventListener('click', () => this.startConversation());
+        this.elements.startSoloButton.addEventListener('click', () => this.startConversation());
+        this.elements.startPeerButton.addEventListener('click', () => this.startPeerMode());
         this.elements.sendButton.addEventListener('click', () => this.sendMessage());
         this.elements.userInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
@@ -71,6 +73,14 @@ class NexusApp {
 
         // Session timeout check
         setInterval(() => this.checkSessionTimeout(), 60000); // Check every minute
+    }
+
+    /**
+     * Start peer mode
+     */
+    async startPeerMode() {
+        const peerApp = new PeerModeApp();
+        await peerApp.init();
     }
 
     /**
