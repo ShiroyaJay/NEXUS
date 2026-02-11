@@ -5,6 +5,7 @@
  * Privacy-first: All data in-memory only, no persistence
  */
 
+const config = require('./config');
 const express = require('express');
 const { createServer } = require('http');
 const { Server } = require('socket.io');
@@ -18,8 +19,6 @@ const io = new Server(httpServer, {
         methods: ["GET", "POST"]
     }
 });
-
-const PORT = process.env.PORT || 3000;
 
 // ===== IN-MEMORY DATA STORAGE (Ephemeral) =====
 // All data cleared when server restarts - privacy-first
@@ -182,27 +181,14 @@ io.on('connection', (socket) => {
     // ===== AI GUIDANCE SYSTEM =====
 
     socket.on('ai-guidance', (data) => {
-        console.log('[SERVER DEBUG] Received ai-guidance event:', data);
-        console.log('[SERVER DEBUG] Type of data:', typeof data);
-        console.log('[SERVER DEBUG] Keys:', Object.keys(data));
-
         const { userMessage, peerMessage } = data;
-        console.log('[SERVER DEBUG] userMessage:', userMessage);
-        console.log('[SERVER DEBUG] peerMessage:', peerMessage);
-
         const session = userSessions.get(socket.id);
 
         if (!session || !session.conversationId || !session.peerId) {
-            console.log('[SERVER DEBUG] No valid session/conversation');
             return;
         }
 
         // Send personalized AI guidance to each user
-        // userMessage goes to the user who triggered this (socket.id)
-        // peerMessage goes to their peer
-        console.log('[SERVER DEBUG] Sending to socket.id:', socket.id, 'message:', userMessage);
-        console.log('[SERVER DEBUG] Sending to peer:', session.peerId, 'message:', peerMessage);
-
         io.to(socket.id).emit('ai-guidance', { message: userMessage });
         io.to(session.peerId).emit('ai-guidance', { message: peerMessage });
 
@@ -298,12 +284,22 @@ io.on('connection', (socket) => {
     });
 });
 
+// ===== API ROUTES =====
+
+// Client config endpoint (non-sensitive values only)
+app.get('/api/config', (req, res) => {
+    res.json({
+        ollamaHost: config.ollama.host,
+        ollamaModel: config.ollama.model,
+    });
+});
+
 // ===== STATIC FILE SERVING =====
 
-app.use(express.static(path.join(__dirname)));
+app.use(express.static(path.join(__dirname, '..', 'public')));
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
+    res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
 });
 
 // ===== CLEANUP TASK =====
@@ -315,12 +311,14 @@ setInterval(() => {
 
 // ===== START SERVER =====
 
-httpServer.listen(PORT, () => {
+httpServer.listen(config.port, () => {
     console.log('\n=================================');
     console.log('🚀 NEXUS Peer Server Running');
     console.log('=================================');
-    console.log(`📍 URL: http://localhost:${PORT}`);
+    console.log(`📍 URL: http://localhost:${config.port}`);
+    console.log(`🧠 Ollama: ${config.ollama.host} (${config.ollama.model})`);
     console.log(`🔒 Privacy: In-memory only, no persistence`);
+    console.log(`🌍 Environment: ${config.nodeEnv}`);
     console.log(`⏰ Started: ${new Date().toISOString()}`);
     console.log('=================================\n');
 });

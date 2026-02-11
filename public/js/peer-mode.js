@@ -23,7 +23,7 @@ class PeerMode {
     connect() {
         return new Promise((resolve, reject) => {
             // Connect to Socket.io server
-            this.socket = io('http://localhost:3000', {
+            this.socket = io(window.location.origin, {
                 transports: ['websocket', 'polling']
             });
 

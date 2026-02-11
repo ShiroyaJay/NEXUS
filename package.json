@@ -1,21 +1,27 @@
 {
   "name": "nexus-emotional-guide",
   "version": "2.0.0",
-  "description": "NEXUS - Emotional Guide with peer-to-peer conversation support",
-  "main": "server.js",
+  "description": "NEXUS – Emotional Guide with peer-to-peer conversation support",
+  "main": "src/server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js"
+    "start": "node src/server.js",
+    "dev": "npx nodemon src/server.js"
   },
   "keywords": [
     "emotional-guide",
     "peer-to-peer",
     "websocket",
-    "mental-health"
+    "mental-health",
+    "ollama",
+    "privacy-first"
   ],
-  "author": "",
+  "author": "Jay Shiroya",
   "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "dependencies": {
+    "dotenv": "^16.4.7",
     "express": "^4.18.2",
     "socket.io": "^4.6.1"
   }

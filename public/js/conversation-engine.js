@@ -8,10 +8,11 @@
 class OllamaConversationEngine {
     constructor() {
         this.conversationHistory = [];
-        this.ollamaEndpoint = 'http://localhost:11434/api/chat';
-        this.model = 'llama3.1:8b'; // Default model
+        this.ollamaEndpoint = null; // Set dynamically from server config
+        this.model = null;          // Set dynamically from server config
         this.isOllamaAvailable = false;
         this.conversationStartTime = Date.now();
+        this.configLoaded = false;
 
         // Therapeutic system prompt - defines NEXUS's conversational style
         this.systemPrompt = `You are NEXUS, a warm and empathetic companion helping someone through meaningful emotional conversation.
@@ -80,9 +81,35 @@ Remember: You're having a real human conversation with someone who needs to be h
     }
 
     /**
+     * Load config from server (Ollama host, model)
+     */
+    async loadConfig() {
+        if (this.configLoaded) return;
+
+        try {
+            const res = await fetch('/api/config');
+            if (res.ok) {
+                const cfg = await res.json();
+                this.ollamaEndpoint = `${cfg.ollamaHost}/api/chat`;
+                this.model = cfg.ollamaModel;
+            }
+        } catch (err) {
+            console.warn('[NEXUS] Could not load server config, using defaults');
+        }
+
+        // Fallback defaults if config endpoint unavailable
+        if (!this.ollamaEndpoint) this.ollamaEndpoint = 'http://localhost:11434/api/chat';
+        if (!this.model) this.model = 'llama3.1:8b';
+
+        this.configLoaded = true;
+    }
+
+    /**
      * Check if Ollama is installed and running
      */
     async checkOllama() {
+        await this.loadConfig();
+
         try {
             const response = await fetch(this.ollamaEndpoint.replace('/api/chat', '/api/tags'));
             if (response.ok) {
